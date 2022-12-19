@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 import static java.util.Objects.isNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -44,8 +46,19 @@ public class CreditAccountController {
     }
 
     @PostMapping(value = "/add", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> getCarByCost(@RequestBody CreditAccount creditAccount) {
-
+    public ResponseEntity<Boolean> addCreditAccount(@RequestBody CreditAccount creditAccount) {
         return ResponseEntity.ok(creditAccountService.addCreditAccount(creditAccount));
+    }
+
+    // Полный апдейт, когда необходимо изменить все поля кроме ID, либо некоторые поля
+    @PutMapping(value = "/update", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> updateCreditAccount(@RequestBody CreditAccount creditAccount) {
+        return ResponseEntity.ok(creditAccountService.updateCreditAccount(creditAccount));
+    }
+
+    // Апдейт только по сумме на аккаунте
+    @PutMapping(value = "/updateSumById/{id}/{sum}")
+    public ResponseEntity<Boolean> updateCreditAccountBySum(@PathVariable Long id, @PathVariable BigDecimal sum) {
+        return ResponseEntity.ok(creditAccountService.updateCreditAccountBySum(id, sum));
     }
 }

@@ -66,7 +66,6 @@ public class CreditAccountRepositoryDB implements CreditAccountRepository {
         if (accounts.containsKey(id)) {
             BigDecimal currentSum = accounts.get(id).getAccountAmount();
             currentSum = currentSum.add(sum);
-            //CreditAccount creditAccount = accounts.get(id);
             accounts.get(id).setAccountAmount(currentSum);
             return true;
         }

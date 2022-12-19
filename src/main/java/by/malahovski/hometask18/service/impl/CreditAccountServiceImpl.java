@@ -40,6 +40,10 @@ public class CreditAccountServiceImpl implements CreditAccountService {
 
     @Override
     public Boolean updateCreditAccountBySum(Long id, BigDecimal sum) {
+        BigDecimal result = creditAccountRepository.getAccountByIdInRepository(id).getAccountAmount().add(sum);
+        if (result.compareTo(BigDecimal.valueOf(0)) == -1) {
+            throw new ArithmeticException("На аккаунте c ID " + id + " не достаточно средств.");
+        }
         return creditAccountRepository.updateAccountBySum(id, sum);
     }
 }
